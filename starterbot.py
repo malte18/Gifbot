@@ -2,6 +2,13 @@ import os
 import time
 import re
 
+import json
+
+import time
+import giphy_client
+from giphy_client.rest import ApiException
+from pprint import pprint
+
 from slackclient import SlackClient
 
 
@@ -57,10 +64,33 @@ def handle_command(command, channel):
         response = "I'm fine, thanks. How are you?"
     elif command.startswith(MORE_COMMANDS):
         response = "How can I help you?"
+    elif command.startswith(GIPHY_COMMAND):
 
+        # create an instance of the API class
+        api_instance = giphy_client.DefaultApi()
+        api_key = 'dc6zaTOxFJmzC' # str | Giphy API Key.
+        command = command.split(" ")[1:]
+        tag = " ".join(command) # str | Search query term or prhase.
+        rating = 'g' # str | Filters results by specified rating. (optional)
+        fmt = 'json' # str | Used to indicate the expected response format. Default is Json. (optional) (default to json)
+
+        try:
+            # Search Endpoint
+            api_response = api_instance.gifs_random_get(api_key, tag=tag, rating=rating, fmt=fmt)
+            print("#'#########################'")
+            #pprint(api_response)
+            print("#'#########################'")
+
+            #pull url from json file
+            def url_pull(api_response):
+                x = api_response.data.url
+                return x
 
         except ApiException as e:
-            print("Exception when calling DefaultApi->gifs_random_get: %s\n" % e)
+            print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
+
+        response = ### url_pull here
+
 
 
     # Sends the response back to the channel
