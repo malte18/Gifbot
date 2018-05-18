@@ -77,9 +77,6 @@ def handle_command(command, channel):
         try:
             # Search Endpoint
             api_response = api_instance.gifs_random_get(api_key, tag=tag, rating=rating, fmt=fmt)
-            print("#'#########################'")
-            #pprint(api_response)
-            print("#'#########################'")
 
             #pull url from json file
             def url_pull(api_response):
@@ -88,10 +85,6 @@ def handle_command(command, channel):
 
         except ApiException as e:
             print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
-
-        response = ### url_pull here
-
-
 
     # Sends the response back to the channel
     slack_client.api_call(
