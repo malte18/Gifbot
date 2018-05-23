@@ -4,7 +4,6 @@ import re
 
 import json
 
-import time
 import giphy_client
 from giphy_client.rest import ApiException
 from pprint import pprint
@@ -83,7 +82,7 @@ def handle_command(command, channel):
                 x = api_response.data.url
                 return x
 
-            response = url_pull(api_response) 
+            response = url_pull(api_response)
 
         except ApiException as e:
             print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
